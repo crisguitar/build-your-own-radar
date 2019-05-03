@@ -56,8 +56,10 @@ header {
 
 
   .quadrant-btn--group, .multiple-sheet-button-group {
-    text-align: left;
-    padding-left: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 2rem;
   }
 
   .print-radar-btn, .search-box {
@@ -67,6 +69,9 @@ header {
 
   .buttons-group {
     padding: 15px 0 25px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
   }
 
   .home-link {

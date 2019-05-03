@@ -6,7 +6,6 @@ const $ = require('jquery')
 require('jquery-ui/ui/widgets/autocomplete')
 
 const RingCalculator = require('../util/ringCalculator')
-const QueryParams = require('../util/queryParamProcessor')
 
 const MIN_BLIP_WIDTH = 12
 const ANIMATION_DURATION = 1000
@@ -436,7 +435,7 @@ const Radar = function (size, radar) {
       .append('div')
       .attr('class', 'radar-title__text')
       .append('h1')
-      .text(document.title)
+      .text('The TWer Growth Radar')
       .style('cursor', 'pointer')
       .on('click', redrawFullRadar)
 
@@ -474,13 +473,6 @@ const Radar = function (size, radar) {
     _.each([0, 1, 2, 3], function (i) {
       addButton(quadrants[i])
     })
-
-    buttonsGroup.append('div')
-      .classed('print-radar-btn', true)
-      .append('div')
-      .classed('print-radar button no-capitalize', true)
-      .text('Print this radar')
-      .on('click', window.print.bind(window))
 
     alternativeDiv.append('div')
       .classed('search-box', true)
@@ -532,7 +524,7 @@ const Radar = function (size, radar) {
     d3.selectAll('.quadrant-table.' + order).classed('selected', true)
     d3.selectAll('.blip-item-description').classed('expanded', false)
 
-    var scale = 2
+    const scale = 2
 
     var adjustX = Math.sin(toRadian(startAngle)) - Math.cos(toRadian(startAngle))
     var adjustY = Math.cos(toRadian(startAngle)) + Math.sin(toRadian(startAngle))
@@ -582,44 +574,12 @@ const Radar = function (size, radar) {
     return self
   }
 
-  function constructSheetUrl (sheetName) {
-    var noParamUrl = window.location.href.substring(0, window.location.href.indexOf(window.location.search))
-    var queryParams = QueryParams(window.location.search.substring(1))
-    var sheetUrl = noParamUrl + '?sheetId=' + queryParams.sheetId + '&sheetName=' + encodeURIComponent(sheetName)
-    return sheetUrl
-  }
-
-  function plotAlternativeRadars (alternatives, currentSheet) {
-    var alternativeSheetButton = alternativeDiv
-      .append('div')
-      .classed('multiple-sheet-button-group', true)
-
-    alternativeSheetButton.append('p').text('Choose a sheet to populate radar')
-    alternatives.forEach(function (alternative) {
-      alternativeSheetButton
-        .append('div:a')
-        .attr('class', 'first full-view alternative multiple-sheet-button')
-        .attr('href', constructSheetUrl(alternative))
-        .text(alternative)
-
-      if (alternative === currentSheet) {
-        d3.selectAll('.alternative').filter(function () {
-          return d3.select(this).text() === alternative
-        }).attr('class', 'highlight multiple-sheet-button')
-      }
-    })
-  }
-
   self.plot = function () {
-    var rings, quadrants, alternatives, currentSheet
+    var rings, quadrants
 
     rings = radar.rings()
     quadrants = radar.quadrants()
-    alternatives = radar.getAlternatives()
-    currentSheet = radar.getCurrentSheet()
     var header = plotRadarHeader()
-
-    plotAlternativeRadars(alternatives, currentSheet)
 
     plotQuadrantButtons(quadrants, header)
 
