@@ -366,7 +366,7 @@ const Radar = function (size, radar) {
       .append('div')
       .attr('class', 'radar-title__text')
       .append('h1')
-      .text('The TWer Growth Radar')
+      .text(document.title)
       .style('cursor', 'pointer')
       .on('click', redrawFullRadar)
 

@@ -104,7 +104,7 @@ const GoogleSheet = function (sheetReference, sheetName) {
         var all = tabletop.sheets(sheetName).all()
         var blips = _.map(all, new InputSanitizer().sanitize)
 
-        plotRadar(tabletop.googleSheetName + ' - ' + sheetName, blips, sheetName, tabletop.foundSheetNames)
+        plotRadar(tabletop.googleSheetName, blips, sheetName, tabletop.foundSheetNames)
       } catch (exception) {
         plotErrorMessage(exception)
       }
@@ -250,7 +250,7 @@ function plotLoading (content) {
 
   plotLogo(content)
 
-  var bannerText = '<h1>Building your radar...</h1><p>Your Technology Radar will be available in just a few seconds</p>'
+  const bannerText = '<h1>Building your radar...</h1><p>Your Technology Radar will be available in just a few seconds</p>'
   plotBanner(content, bannerText)
   plotFooter(content)
 }
