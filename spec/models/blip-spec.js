@@ -38,6 +38,11 @@ describe('Blip', function () {
     expect(blip.isNew()).toBe(true)
   })
 
+  it('has a keyword', function () {
+    blip = new Blip('Pepe', new Ring('My Ring'), true, 'some topic', 'some description', 'some keyword')
+    expect(blip.keyword()).toBe('some keyword')
+  })
+
   it('is not new', function () {
     blip = new Blip(
       'My Blip',

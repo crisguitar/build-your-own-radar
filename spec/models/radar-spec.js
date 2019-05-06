@@ -163,8 +163,8 @@ describe('Radar', function () {
 
     it('returns an array for a given set of blips', function () {
       quadrant.add([
-        new Blip('A', firstRing),
-        new Blip('B', secondRing)
+        new Blip('A', firstRing, false, 'some topic', 'some description', 'some keyword'),
+        new Blip('B', secondRing, true, 'other topic', 'other description', 'other keyword')
       ])
 
       radar.addQuadrant(quadrant)

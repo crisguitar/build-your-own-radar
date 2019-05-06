@@ -1,9 +1,7 @@
 const IDEAL_BLIP_WIDTH = 22
-const Blip = function (name, ring, isNew, topic, description) {
-  var self, number
-
-  self = {}
-  number = -1
+const Blip = function (name, ring, isNew, topic, description, keyword) {
+  const self = {}
+  let number = -1
 
   self.width = IDEAL_BLIP_WIDTH
 
@@ -17,6 +15,10 @@ const Blip = function (name, ring, isNew, topic, description) {
 
   self.description = function () {
     return description || ''
+  }
+
+  self.keyword = function () {
+    return keyword || ''
   }
 
   self.isNew = function () {

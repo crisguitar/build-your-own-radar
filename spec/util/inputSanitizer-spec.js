@@ -1,17 +1,18 @@
 const InputSanitizer = require('../../src/util/inputSanitizer')
 
 describe('InputSanitizer', function () {
-  var sanitizer, rawBlip, blip
+  let sanitizer, rawBlip, blip
 
-  beforeAll(function () {
+  beforeEach(function () {
     sanitizer = new InputSanitizer()
-    var description = "<b>Hello</b> <script>alert('dangerous');</script>there <h1>heading</h1>"
+    const description = '<b>Hello</b> <script>alert(\'dangerous\');</script>there <h1>heading</h1>'
     rawBlip = {
       name: "Hello <script>alert('dangerous');</script>there <h1>blip</h1>",
       description: description,
       ring: '<a href="/asd">Adopt</a>',
       quadrant: '<strong>techniques and tools</strong>',
-      isNew: 'true<br>'
+      isNew: 'true<br>',
+      keyword: 'iamkeyword<br>'
     }
 
     blip = sanitizer.sanitize(rawBlip)
@@ -47,18 +48,23 @@ describe('InputSanitizer', function () {
     expect(blip.name).toEqual('Some name')
     expect(blip.ring).toEqual('Some ring name')
   })
+
+  it('strips out all tags from blip keyword', function () {
+    expect(blip.keyword).toEqual('iamkeyword')
+  })
 })
 
-describe('Input Santizer for Protected sheet', function () {
+describe('Input Sanitizer for Protected sheet', function () {
   var sanitizer, rawBlip, blip, header
-  beforeAll(function () {
+  beforeEach(function () {
     sanitizer = new InputSanitizer()
     header = [
       'name',
       'quadrant',
       'ring',
       'isNew',
-      'description'
+      'description',
+      'keyword'
     ]
 
     rawBlip = [
@@ -66,7 +72,8 @@ describe('Input Santizer for Protected sheet', function () {
       '<strong>techniques & tools</strong>',
       "<a href='/asd'>Adopt</a>",
       'true<br>',
-      "<b>Hello</b> <script>alert('dangerous');</script>there <h1>heading</h1>"
+      "<b>Hello</b> <script>alert('dangerous');</script>there <h1>heading</h1>",
+      '<b>Pepe</b><script>alert(\'dangerous\');</script>'
     ]
 
     blip = sanitizer.sanitizeForProtectedSheet(rawBlip, header)
@@ -93,13 +100,17 @@ describe('Input Santizer for Protected sheet', function () {
   })
 
   it('trims white spaces in keys and values', function () {
-    rawBlip = {
+    const someRawBlip = {
       ' name': '   Some name ',
       '   ring ': '    Some ring name '
     }
-    blip = sanitizer.sanitize(rawBlip)
+    const someBlip = sanitizer.sanitize(someRawBlip)
 
-    expect(blip.name).toEqual('Some name')
-    expect(blip.ring).toEqual('Some ring name')
+    expect(someBlip.name).toEqual('Some name')
+    expect(someBlip.ring).toEqual('Some ring name')
+  })
+
+  it('strips out all tags from blip keyword', function () {
+    expect(blip.keyword).toEqual('Pepe')
   })
 })

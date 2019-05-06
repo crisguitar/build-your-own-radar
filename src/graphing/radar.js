@@ -222,9 +222,6 @@ const Radar = function (size, radar) {
 
     circle(blip, x, y, order, group)
 
-    const tokens = blip.name().split(' ')
-    const blipWord = tokens[0]
-
     group.append('text')
       .attr('x', x)
       .attr('y', y + 4)
@@ -232,7 +229,7 @@ const Radar = function (size, radar) {
       // derive font-size from current blip width
       .style('font-size', ((blip.width * 10) / 22) + 'px')
       .attr('text-anchor', 'middle')
-      .text(blipWord)
+      .text(blip.keyword())
 
     var blipListItem = ringList.append('li')
     var blipText = blip.number() + '. ' + blip.name() + (blip.topic() ? ('. - ' + blip.topic()) : '')

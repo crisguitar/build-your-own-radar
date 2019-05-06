@@ -46,7 +46,7 @@ const plotRadar = function (title, blips, currentRadarName, alternativeRadars) {
     if (!quadrants[blip.quadrant]) {
       quadrants[blip.quadrant] = new Quadrant(_.capitalize(blip.quadrant))
     }
-    quadrants[blip.quadrant].add(new Blip(blip.name, ringMap[blip.ring], blip.isNew.toLowerCase() === 'true', blip.topic, blip.description))
+    quadrants[blip.quadrant].add(new Blip(blip.name, ringMap[blip.ring], blip.isNew.toLowerCase() === 'true', blip.topic, blip.description, blip.keyword))
   })
 
   var radar = new Radar()
@@ -116,14 +116,14 @@ const GoogleSheet = function (sheetReference, sheetName) {
       sheetName = sheetNames[0]
     }
     values.forEach(function (value) {
-      var contentValidator = new ContentValidator(values[0])
+      const contentValidator = new ContentValidator(values[0])
       contentValidator.verifyContent()
       contentValidator.verifyHeaders()
     })
 
     const all = values
     const header = all.shift()
-    var blips = _.map(all, blip => new InputSanitizer().sanitizeForProtectedSheet(blip, header))
+    const blips = _.map(all, blip => new InputSanitizer().sanitizeForProtectedSheet(blip, header))
     plotRadar(documentTitle + ' - ' + sheetName, blips, sheetName, sheetNames)
   }
 

@@ -9,7 +9,7 @@ const MalformedDataError = require('../../src/exceptions/malformedDataError')
 const ExceptionMessages = require('./exceptionMessages')
 
 const ContentValidator = function (columnNames) {
-  var self = {}
+  const self = {}
   columnNames = columnNames.map(function (columnName) {
     return columnName.trim()
   })
@@ -21,7 +21,7 @@ const ContentValidator = function (columnNames) {
   }
 
   self.verifyHeaders = function () {
-    _.each(['name', 'ring', 'quadrant', 'isNew', 'description'], function (field) {
+    _.each(['name', 'ring', 'quadrant', 'isNew', 'description', 'keyword'], function (field) {
       if (columnNames.indexOf(field) === -1) {
         throw new MalformedDataError(ExceptionMessages.MISSING_HEADERS)
       }
