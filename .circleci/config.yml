@@ -4,7 +4,7 @@ orbs:
 jobs:
   build:
     docker:
-      - image: nikolaik/python-nodejs:python3.6-nodejs11
+      - image: jtredoux/node-aws:11
 
     working_directory: ~/repo
 
